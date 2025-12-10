@@ -3,23 +3,10 @@ const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
 const fs = require('fs');
-const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-
-// CORS Configuration - Allow Vercel frontend to connect
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://127.0.0.1:5500',
-    /\.vercel\.app$/, // Allow all Vercel deployments
-    /\.onrender\.com$/ // Allow Render domains
-  ],
-  credentials: true
-}));
 
 // Middleware
 app.use(express.json());

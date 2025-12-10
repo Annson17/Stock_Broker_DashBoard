@@ -1,10 +1,3 @@
-// API Configuration - Dynamically detect backend URL
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? 'http://localhost:3000'  // Local development
-  : 'https://stock-broker-dashboard.onrender.com'; // Production backend (update after deployment)
-
-const WS_URL = API_BASE_URL.replace('http', 'ws');
-
 // Global state
 let currentUser = null;
 let ws = null;
@@ -63,7 +56,7 @@ function toggleTheme() {
 // Load supported stocks
 async function loadSupportedStocks() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/supported-stocks`);
+    const response = await fetch('/api/supported-stocks');
     const data = await response.json();
     supportedStocks = data.stocks;
     
@@ -123,7 +116,7 @@ async function handleLogin(e) {
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}/api/login`, {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -202,7 +195,7 @@ async function handleStockToggle(ticker, isSubscribed) {
   const endpoint = isSubscribed ? '/api/unsubscribe' : '/api/subscribe';
   
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: currentUser, ticker })
@@ -419,7 +412,10 @@ function updateStatistics(subscriptions) {
 
 // Connect WebSocket
 function connectWebSocket() {
-  ws = new WebSocket(WS_URL);
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}`;
+  
+  ws = new WebSocket(wsUrl);
   
   ws.onopen = () => {
     console.log('WebSocket connected');

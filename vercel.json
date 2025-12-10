@@ -1,6 +1,0 @@
-{
-  "buildCommand": "echo 'No build required for static frontend'",
-  "outputDirectory": "public",
-  "cleanUrls": true,
-  "trailingSlash": false
-}

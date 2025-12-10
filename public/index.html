@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Broker Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Section -->
+    <div id="login-section" class="section">
+      <div class="card">
+        <div class="logo">📈</div>
+        <h1>Stock Broker Dashboard</h1>
+        <p class="subtitle">Real-time Market Tracking</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email to continue" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Start Trading</button>
+          <p class="quick-demo">Quick Demo: Just enter any email to start</p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="section" style="display: none;">
+      <div class="header">
+        <div class="header-left">
+          <h1>📊 Dashboard</h1>
+          <p class="user-email">Welcome, <span id="current-user"></span></p>
+        </div>
+        <div class="header-right">
+          <button id="theme-toggle" class="btn btn-icon" title="Toggle Dark Mode">🌙</button>
+          <button id="logout-btn" class="btn btn-secondary">Logout</button>
+        </div>
+      </div>
+
+      <!-- Portfolio Statistics -->
+      <div class="stats-grid" id="stats-grid" style="display: none;">
+        <div class="stat-card">
+          <div class="stat-label">Portfolio Value</div>
+          <div class="stat-value" id="total-value">$0.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today's Change</div>
+          <div class="stat-value" id="total-change">$0.00 (0.00%)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Best Performer</div>
+          <div class="stat-value" id="best-performer">--</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Worst Performer</div>
+          <div class="stat-value" id="worst-performer">--</div>
+        </div>
+      </div>
+
+      <!-- Subscribe Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Available Stocks</h2>
+          <div class="connection-status" id="connection-status" title="Connection Status">●</div>
+        </div>
+        <div class="stock-buttons" id="stock-buttons"></div>
+      </div>
+
+      <!-- Portfolio Section -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Your Portfolio</h2>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" title="Grid View">⊞</button>
+            <button class="view-btn" data-view="list" title="List View">☰</button>
+          </div>
+        </div>
+        <div id="portfolio" class="portfolio-grid">
+          <p class="empty-message">No stocks subscribed yet. Subscribe to stocks above to get started.</p>
+        </div>
+      </div>
+
+      <!-- Price Chart Modal -->
+      <div id="chart-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="chart-title">Stock Price History</h2>
+            <button class="close-btn" onclick="closeChartModal()">×</button>
+          </div>
+          <canvas id="price-chart"></canvas>
+        </div>
+      </div>
+
+      <!-- Alert Notification -->
+      <div id="alert-container"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

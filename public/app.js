@@ -50,7 +50,6 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
   updateThemeIcon(newTheme);
-  showAlert('success', 'Theme Changed', `Switched to ${newTheme} mode`);
 }
 
 // Load supported stocks
@@ -128,7 +127,7 @@ async function handleLogin(e) {
       currentUser = email;
       showDashboard(data.subscriptions);
       connectWebSocket();
-      showAlert('success', 'Welcome!', `Logged in as ${email}`);
+      showAlert('success', 'Welcome!', `Logged in as ${email}`, 1500);
     } else {
       showAlert('danger', 'Login Failed', data.error || 'Please try again');
     }
@@ -156,7 +155,6 @@ function handleLogout() {
   dashboardSection.style.display = 'none';
   statsGrid.style.display = 'none';
   emailInput.value = '';
-  showAlert('success', 'Logged Out', 'See you next time!');
 }
 
 // Show dashboard
@@ -207,15 +205,12 @@ async function handleStockToggle(ticker, isSubscribed) {
       renderStockButtons(data.subscriptions);
       renderPortfolio(data.subscriptions);
       updateStatistics(data.subscriptions);
-      
-      const action = isSubscribed ? 'unsubscribed from' : 'subscribed to';
-      showAlert('success', 'Success', `You ${action} ${ticker}`);
     } else {
-      showAlert('danger', 'Error', data.error || 'Operation failed');
+      showAlert('danger', 'Error', data.error || 'Operation failed', 2000);
     }
   } catch (error) {
     console.error('Subscription error:', error);
-    showAlert('danger', 'Error', 'Failed to update subscription');
+    showAlert('danger', 'Error', 'Failed to update subscription', 2000);
   }
 }
 
@@ -531,7 +526,7 @@ function updateStockPrice(ticker, newPrice) {
   if (Math.abs(changePercent) > 3) {
     const alertType = changePercent > 0 ? 'success' : 'warning';
     const direction = changePercent > 0 ? 'up' : 'down';
-    showAlert(alertType, `${ticker} Alert`, `Price moved ${direction} ${Math.abs(changePercent).toFixed(2)}%!`, 3000);
+    showAlert(alertType, `${ticker} Alert`, `Price moved ${direction} ${Math.abs(changePercent).toFixed(2)}%!`, 2000);
   }
   
   // Update statistics
@@ -560,7 +555,7 @@ function updateConnectionStatus(connected) {
 }
 
 // Show alert notification
-function showAlert(type, title, message, duration = 5000) {
+function showAlert(type, title, message, duration = 2000) {
   const alert = document.createElement('div');
   alert.className = `alert ${type}`;
   

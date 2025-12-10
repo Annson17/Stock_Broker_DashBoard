@@ -1,171 +1,127 @@
-# Deployment Guide - Single Server (Render.com)
+# Deployment Guide
 
-## 🚀 Simple One-Step Deployment
+## Production Deployment
 
-This application uses a **single deployment** model where the backend serves both the API and frontend static files. Perfect for demos and MVPs without a database.
+**Live Application:** https://stock-broker-dashboard-mn83.onrender.com
 
----
+This application is deployed on Render.com using a single-server architecture where the Node.js backend serves both API endpoints and static frontend files.
 
-## Why Single Deployment?
+## Deployment Configuration
 
-✅ **No Database** - Only file-based persistence  
-✅ **Simple Architecture** - One URL, one service  
-✅ **No CORS Issues** - Frontend and backend on same domain  
-✅ **Easy Maintenance** - One deployment to manage  
-✅ **Cost Effective** - Free tier sufficient  
+The application uses a unified deployment model suitable for applications without external database dependencies.
 
----
+**Benefits:**
+- Single URL endpoint for frontend and backend
+- No cross-origin resource sharing configuration required
+- File-based data persistence
+- Simplified deployment and maintenance
+- Free tier hosting sufficient for demonstration purposes
 
-## Deploy to Render.com (Free)
+## Render.com Deployment Steps
 
-### Step 1: Sign Up
+### Prerequisites
 
-1. Go to https://render.com
-2. Sign up with GitHub account
+- GitHub account with repository access
+- Render.com account (free tier available)
 
-### Step 2: Create Web Service
+### Configuration
 
-1. Click "New +" → "Web Service"
-2. Connect your GitHub repository: `Annson17/Stock_Broker_DashBoard`
-3. Click "Connect"
+1. Access Render dashboard at https://render.com
+2. Create new Web Service
+3. Connect GitHub repository: `Annson17/Stock_Broker_DashBoard`
 
-### Step 3: Configure Service
+### Service Settings
 
-**Basic Settings:**
-- **Name:** `stock-broker-dashboard` (or your choice)
-- **Region:** Choose closest to your location
-- **Branch:** `main`
-- **Root Directory:** Leave blank
-- **Runtime:** `Node`
+**Environment Configuration:**
+- Name: `stock-broker-dashboard`
+- Region: Select nearest data center
+- Branch: `main`
+- Root Directory: (leave empty)
+- Runtime: Node
 
-**Build & Deploy:**
-- **Build Command:** `npm install`
-- **Start Command:** `npm start`
+**Build Configuration:**
+- Build Command: `npm install`
+- Start Command: `npm start`
 
 **Instance Type:**
-- **Plan:** `Free` (sufficient for demo/selection rounds)
+- Free tier (suitable for demo and testing)
 
-### Step 4: Deploy
+### Deployment Process
+2. Build process completes (approximately 2-3 minutes)
+3. Application becomes available at assigned URL
 
-1. Click "Create Web Service"
-2. Wait 2-3 minutes for initial deployment
-3. Your app will be live at: `https://stock-broker-dashboard-xxxx.onrender.com`
+## Verification
 
----
+After deployment completes, verify functionality by accessing:
 
-## 🎯 Your Live Application
-
-**Single URL for everything:**
+**Health Check Endpoint:**
 ```
-https://stock-broker-dashboard.onrender.com
-├── Frontend (HTML/CSS/JS)
-├── REST API (/api/*)
-├── WebSocket (real-time updates)
-└── Health Check (/health)
+https://stock-broker-dashboard-mn83.onrender.com/health
 ```
+Expected response: `{"status":"ok","timestamp":"...","uptime":...}`
 
----
+**API Endpoint:**
+```
+https://stock-broker-dashboard-mn83.onrender.com/api/supported-stocks
+```
+Expected response: `{"stocks":["GOOG","TSLA","AMZN","META","NVDA"]}`
 
-## ✅ Verify Deployment
+**Application:**
+```
+https://stock-broker-dashboard-mn83.onrender.com
+```
+Expected: Login page interface
 
-After deployment, test these endpoints:
+## Testing Multi-User Functionality
 
-1. **Health Check:**
-   ```
-   https://your-app.onrender.com/health
-   ```
-   Should return: `{"status":"ok","timestamp":"...","uptime":123}`
+1. Access deployed URL in browser
+2. Login with test email: `user1@test.com`
+3. Subscribe to stocks: GOOG, TSLA
+4. Open application in separate browser or incognito window
+5. Login with different email: `user2@test.com`
+6. Subscribe to different stocks: META, NVDA
+7. Verify independent real-time updates in both sessions
 
-2. **Supported Stocks:**
-   ```
-   https://your-app.onrender.com/api/supported-stocks
-   ```
-   Should return: `{"stocks":["GOOG","TSLA","AMZN","META","NVDA"]}`
+## Free Tier Behavior
 
-3. **Main App:**
-   ```
-   https://your-app.onrender.com
-   ```
-   Should show login page
+Render free tier instances sleep after 15 minutes of inactivity. The service automatically restarts when accessed, typically within 30-60 seconds.
 
----
+To maintain active status during demonstration periods, configure an uptime monitoring service:
+1. Create account at https://uptimerobot.com
+2. Configure monitor for application URL
+3. Set ping interval to 10 minutes
 
-## 🧪 Test Multi-User Feature
+## Troubleshooting
 
-1. Open your deployed URL in browser
-2. Login as: `user1@test.com`
-3. Subscribe to: GOOG, TSLA
-4. Open same URL in incognito/private window
-5. Login as: `user2@test.com`
-6. Subscribe to: META, NVDA
-7. Observe both dashboards updating independently in real-time
+**Application Error:**
+- Review Render deployment logs in dashboard
+- Verify local build: `npm install && npm start`
+- Confirm PORT environment variable configuration
 
----
+**WebSocket Connection Issues:**
+- Verify deployment status in Render dashboard
+- Check browser developer console for error messages
+- Test health endpoint accessibility
 
-## 💡 Important Notes
+**Data Persistence:**
+- Free tier uses ephemeral filesystem
+- Data persists during active session
+- May reset on application redeployment
+- Consider external database for production use
 
-### Free Tier Behavior
-
-**Render Free Tier:**
-- ✅ Sleeps after 15 minutes of inactivity
-- ✅ Wakes up automatically when accessed (takes 30-60 seconds)
-- ✅ Sufficient for demo/selection rounds
-- ✅ Upgrade to paid ($7/month) for always-on
-
-### Keep Service Awake (Optional)
-
-Use a free ping service:
-1. Sign up at https://uptimerobot.com (free)
-2. Add monitor for your Render URL
-3. Ping interval: 10 minutes
-4. Prevents sleep during demo periods
-
----
-
-## 🔧 Troubleshooting
-
-### Issue: "Application Error" on Render
-
-**Solution:**
-- Check Render logs (Dashboard → Logs)
-- Verify `npm start` runs locally: `npm start`
-- Check port configuration: `PORT` environment variable
-
-### Issue: WebSocket Not Connecting
-
-**Solution:**
-- Verify app is deployed and running
-- Check browser console for errors
-- Test `/health` endpoint first
-
-### Issue: Data Not Persisting
-
-**Solution:**
-- Render free tier has ephemeral filesystem
-- Data persists during session but may reset on redeploy
-- For permanent storage, upgrade or use external database
-
----
-
-## 📊 Architecture
+## System Architecture
 
 ```
-User Browser
+Client Browser
      ↓
-https://stock-broker-dashboard.onrender.com
+https://stock-broker-dashboard-mn83.onrender.com
      ↓
-Render Server (Node.js)
-├── Express.js (serves /public folder)
+Render Node.js Instance
+├── Express.js (static file serving)
 ├── REST API (/api/*)
-├── WebSocket Server (real-time)
+├── WebSocket Server
 └── File System (users-data.json)
 ```
-
----
-
-## 🎓 For Company Selection Round
-
-When presenting:
 
 1. **Share Live URL:** `https://your-app.onrender.com`
 2. **Demo Multi-User:** Show two browser tabs with different users
@@ -191,40 +147,44 @@ When scaling to production:
 2. **Add Database:**
    - PostgreSQL on Render (free tier available)
    - Supabase (generous free tier)
-   - MongoDB Atlas (free tier)
+## Production Scaling Considerations
 
-3. **Separate Frontend:**
-   - Deploy frontend to Vercel/Netlify
-   - Keep backend on Render
-   - Useful when adding mobile app
+For applications requiring higher availability and scale:
 
----
+**Paid Hosting:**
+- Render Standard plan ($7/month) provides always-on instances
+- Increased resource allocation
+- Improved performance metrics
 
-## ✅ Deployment Checklist
+**Database Integration:**
+- PostgreSQL on Render
+- Supabase
+- MongoDB Atlas
 
-- [ ] GitHub repository is public and up-to-date
-- [ ] Render account created and linked to GitHub
-- [ ] Web Service created with correct settings
-- [ ] Build successful (check Render logs)
-- [ ] `/health` endpoint returns 200 OK
-- [ ] Main page loads correctly
-- [ ] Login works
-- [ ] Stock subscription works
-- [ ] Real-time updates working
-- [ ] Multi-user tested (two browser tabs)
-- [ ] Dark mode toggle works
-- [ ] Charts display correctly
+**Frontend Separation:**
+- Deploy static files to Vercel or Netlify
+- Maintain API backend on Render
+- Beneficial for mobile application integration
 
----
+## Deployment Checklist
 
-## 📞 Support
+- GitHub repository accessible and current
+- Render account configured with GitHub integration
+- Web service created with correct build settings
+- Build process completes without errors
+- Health endpoint returns HTTP 200
+- Application interface loads correctly
+- User authentication functional
+- Stock subscription operations work
+- Real-time price updates active
+- Multi-user capability verified
+- Theme toggle operational
+- Chart visualization working
 
-If deployment fails:
-1. Check Render logs for errors
-2. Test locally: `npm install && npm start`
-3. Verify Node.js version: >=18.0.0
-4. Check `package.json` scripts
+## Support
 
----
-
-**Your app is production-ready with this simple deployment!** 🎉
+For deployment issues:
+1. Review Render logs in dashboard
+2. Verify local execution: `npm install && npm start`
+3. Confirm Node.js version compatibility (>= 18.0.0)
+4. Validate package.json configuration

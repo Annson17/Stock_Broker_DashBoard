@@ -1,32 +1,16 @@
 # Stock Broker Client Dashboard
 
-A real-time stock broker dashboard application that enables users to manage stock portfolios with live price updates and multi-user capabilities.
+Real-time stock portfolio management application with WebSocket-based live price updates and multi-user support.
 
-## Demo
+## Live Demo
 
-- **Local Development**: `http://localhost:3000`
-- **Production**: [Add deployment URL]
+**Production URL:** https://stock-broker-dashboard-mn83.onrender.com
 
-## Screenshots
-
-### Login Page
-![Login Page](screenshots/login.png)
-
-### Dashboard - Light Mode
-![Dashboard Light Mode](screenshots/dashboard-light.png)
-
-### Dashboard - Dark Mode
-![Dashboard Dark Mode](screenshots/dashboard-dark.png)
-
-### Price Charts
-![Price Charts](screenshots/charts.png)
-
-### Multi-User Support
-![Multi-User Demo](screenshots/multi-user.png)
+**Local Development:** `http://localhost:3000`
 
 ## Overview
 
-This application provides a web-based stock trading dashboard where users can monitor and manage their stock portfolios in real-time. The system supports multiple concurrent users, each with their own independent subscription lists and portfolio views.
+Web-based stock trading dashboard for monitoring and managing stock portfolios in real-time. Supports multiple concurrent users with independent subscription lists and portfolio views.
 
 ## Key Features
 

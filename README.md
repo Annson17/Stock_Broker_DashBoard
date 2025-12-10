@@ -7,6 +7,23 @@ A real-time stock broker dashboard application that enables users to manage stoc
 - **Local Development**: `http://localhost:3000`
 - **Production**: [Add deployment URL]
 
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Dashboard - Light Mode
+![Dashboard Light Mode](screenshots/dashboard-light.png)
+
+### Dashboard - Dark Mode
+![Dashboard Dark Mode](screenshots/dashboard-dark.png)
+
+### Price Charts
+![Price Charts](screenshots/charts.png)
+
+### Multi-User Support
+![Multi-User Demo](screenshots/multi-user.png)
+
 ## Overview
 
 This application provides a web-based stock trading dashboard where users can monitor and manage their stock portfolios in real-time. The system supports multiple concurrent users, each with their own independent subscription lists and portfolio views.

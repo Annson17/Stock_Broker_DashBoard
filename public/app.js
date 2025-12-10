@@ -127,7 +127,6 @@ async function handleLogin(e) {
       currentUser = email;
       showDashboard(data.subscriptions);
       connectWebSocket();
-      showAlert('success', 'Welcome!', `Logged in as ${email}`, 1500);
     } else {
       showAlert('danger', 'Login Failed', data.error || 'Please try again');
     }
@@ -521,13 +520,6 @@ function updateStockPrice(ticker, newPrice) {
   // Update session change
   const updateElement = stockElement.querySelector('.last-update');
   updateElement.textContent = `Session: ${sessionChange >= 0 ? '+' : ''}${sessionChangePercent.toFixed(2)}%`;
-  
-  // Check for significant changes and show alert
-  if (Math.abs(changePercent) > 3) {
-    const alertType = changePercent > 0 ? 'success' : 'warning';
-    const direction = changePercent > 0 ? 'up' : 'down';
-    showAlert(alertType, `${ticker} Alert`, `Price moved ${direction} ${Math.abs(changePercent).toFixed(2)}%!`, 2000);
-  }
   
   // Update statistics
   const subscriptions = Array.from(document.querySelectorAll('.stock-item')).map(el => 
